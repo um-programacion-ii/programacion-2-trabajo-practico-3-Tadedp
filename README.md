@@ -31,9 +31,14 @@
  - Constructor: `Libro(String ISBN, String titulo, String autor)`
  - Métodos setter: `getISBN()`, `getTitulo()`, `getAutor()` y `getEstado()`
  - Métodos getter: `setISBN(String ISBN)`, `setTitulo(String titulo)`, `setAutor(String autor)`, `setEstado()`
- 
 ---
-
+## Clase Catalogo
+- Atributos:
+   - `ArrayList<Libro> libros`
+- Métodos que retorna los libros disponibles: `getLibros()`
+- Métodos para agregar y eliminar libros: `agregarLibro(Libro libro)`, `eliminarLibro(Libro libro)`
+- Método para buscar libro por ISBN: `buscarLibroPorISBN(String ISBN)`
+---
 # Resultados de los tests
 
 Resultados de la ejecución de todos los test:
