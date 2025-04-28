@@ -11,9 +11,34 @@
 - **Recomendación:** Se sugiere leer la consigna completa antes de comenzar con el desarrollo para tener una visión general del proyecto y planificar adecuadamente el trabajo.
 
 ## Identificación del Alumno
-- **Nombre:** [Nombre del Alumno]
-- **Apellido:** [Apellido del Alumno]
-- **Legajo:** [Número de Legajo]
+- **Nombre:** Tadeo 
+- **Apellido:** Drube Perez
+- **Legajo:** 62222
+
+# Documentación
+
+## Enumeración EstadoLibro
+ - Constantes:
+   - `DISPONIBLE`
+   - `PRESTADO`
+---
+## Clase Libro
+ - Atributos:
+   - `String ISBN `
+   - `String titulo`
+   - `String autor`
+   - `EstadoLibro estado = EstadoLibro.DISPONIBLE`
+ - Constructor: `Libro(String ISBN, String titulo, String autor)`
+ - Métodos setter: `getISBN()`, `getTitulo()`, `getAutor()` y `getEstado()`
+ - Métodos getter: `setISBN(String ISBN)`, `setTitulo(String titulo)`, `setAutor(String autor)`, `setEstado()`
+ 
+---
+
+# Resultados de los tests
+
+Resultados de la ejecución de todos los test:
+
+![Resultados de los tests](resultados_test/resultados_test.png)
 
 ## Importante
 - La rama `main` está protegida y no se pueden hacer commits directos sobre ella
