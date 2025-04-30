@@ -50,11 +50,28 @@
 ## Clase SistemaPrestamos
 - Atributos:
    - `Catalogo catalogo`
-   - `ArrayList<Prestamo> prestamosActivos`}
+   - `ArrayList<Prestamo> prestamosActivos`
 - Constructor: `SistemaPrestamos(Catalogo catalogo)`
 - Métodos getter: `getCatalogo()` y `getPrestamosActivos()` 
 - Métodos prestar y devolver libros: `prestarLibro(String ISBN)` y `devolverLibro(String ISBN)`
 - Método para buscar un préstamo activo: `buscarPrestamo(String ISBN)`
+---
+## Clase Usuario
+- Atributos:
+   - `String nombre`
+   - `ArrayList<Prestamo> historialPrestamos`
+- Constructor: `Usuario(String nombre)`
+- Métodos getter: `getNombre()` y `getHistorialPrestamos()`
+- Método setter: `setNombre(String nombre)`
+- Método para registrar préstamo: `registrarPrestamo(Prestamo prestamo)`
+---
+## Clase GestionUsuarios
+- Atributos:
+   - `ArrayList<Usuario> usuariosActivos`
+- Método getter: `getUsuariosActivos()`
+- Métodos agregar y eliminar usuarios: `agregarUsuario(String nombre)` y `eliminarUsuario(String nombre)`
+- Método para buscar un usuario activo: `buscarUsuario(String nombre)`
+- Método para registrar préstamo de usuario: `registrarPrestamo(String nombre, Prestamo prestamo)`
 ---
 # Resultados de los tests
 

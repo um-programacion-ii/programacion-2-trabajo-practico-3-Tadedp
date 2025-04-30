@@ -1,6 +1,9 @@
 package org.example;
 
 import org.example.enums.EstadoLibro;
+import org.example.excepciones.LibroNoDisponibleException;
+import org.example.excepciones.LibroNoExistenteException;
+import org.example.excepciones.PrestamoNoExistenteException;
 import org.example.gestores.SistemaPrestamos;
 import org.example.modelos.Catalogo;
 import org.example.modelos.Libro;
@@ -42,19 +45,22 @@ public class SistemaPrestamosTest {
     }
 
     @Test
-    void testPrestarLibroFallo() {
-        when(catalogo.buscarLibroPorISBN("09788420471839")).thenReturn(null);
-        Prestamo prestamo1 = sistemaPrestamos.prestarLibro("09788420471839");
+    void testPrestarLibroNoExistente() {
+        when(catalogo.buscarLibroPorISBN("09788420471839")).thenThrow(LibroNoExistenteException.class);
+        LibroNoExistenteException e1 = Assertions.assertThrows(LibroNoExistenteException.class, () -> {
+            sistemaPrestamos.prestarLibro("09788420471839");
+        });
+    }
 
-        Assertions.assertNull(prestamo1);
-
+    @Test
+    void testPrestarLibroNoDisponible() {
         libro1.setEstado(EstadoLibro.PRESTADO);
         when(catalogo.buscarLibroPorISBN("09788420471839")).thenReturn(libro1);
-        Prestamo prestamo2 = sistemaPrestamos.prestarLibro("09788420471839");
 
-        verify(catalogo, times(2)).buscarLibroPorISBN("09788420471839");
-        Assertions.assertNull(prestamo2);
-        Assertions.assertEquals(EstadoLibro.PRESTADO, libro1.getEstado());
+        LibroNoDisponibleException e1 = Assertions.assertThrows(LibroNoDisponibleException.class, () -> {
+            sistemaPrestamos.prestarLibro("09788420471839");
+        });
+        Assertions.assertEquals("No se encuentra disponible el libro de ISBN: 09788420471839", e1.getMessage());
     }
 
     @Test
@@ -72,19 +78,21 @@ public class SistemaPrestamosTest {
     }
 
     @Test
-    void testDevolverLibroFallo() {
-        when(catalogo.buscarLibroPorISBN("9788494220579")).thenReturn(null);
-        Prestamo prestamo1 = sistemaPrestamos.devolverLibro("9788494220579");
+    void testDevolverLibroNoExistente() {
+        when(catalogo.buscarLibroPorISBN("09788420471839")).thenThrow(LibroNoExistenteException.class);
+        LibroNoExistenteException e1 = Assertions.assertThrows(LibroNoExistenteException.class, () -> {
+            sistemaPrestamos.devolverLibro("09788420471839");
+        });
+    }
 
-        Assertions.assertNull(prestamo1);
+    @Test
+    void testDevolverLibroNoPrestado() {
+        when(catalogo.buscarLibroPorISBN("09788420471839")).thenReturn(libro1);
 
-        when(catalogo.buscarLibroPorISBN("9788494220579")).thenReturn(libro2);
-        Prestamo prestamo2 = sistemaPrestamos.devolverLibro("9788494220579");
-
-        verify(catalogo, times(2)).buscarLibroPorISBN("9788494220579");
-        Assertions.assertNull(prestamo2);
-        Assertions.assertTrue(sistemaPrestamos.getPrestamosActivos().isEmpty());
-        Assertions.assertEquals(EstadoLibro.DISPONIBLE, libro2.getEstado());
+        PrestamoNoExistenteException e1 = Assertions.assertThrows(PrestamoNoExistenteException.class, () -> {
+            sistemaPrestamos.devolverLibro("09788420471839");
+        });
+        Assertions.assertEquals("No existe ningún préstamo para el libro de ISBN: 09788420471839", e1.getMessage());
     }
 
     @Test
@@ -99,16 +107,20 @@ public class SistemaPrestamosTest {
     }
 
     @Test
-    void testBuscarPrestamoFallo() {
-        when(catalogo.buscarLibroPorISBN("09788420471839")).thenReturn(null);
-        Prestamo prestamo1 = sistemaPrestamos.buscarPrestamo("09788420471839");
+    void testBuscarPrestamoLibroNoExistente() {
+        when(catalogo.buscarLibroPorISBN("09788420471839")).thenThrow(LibroNoExistenteException.class);
+        LibroNoExistenteException e1 = Assertions.assertThrows(LibroNoExistenteException.class, () -> {
+            sistemaPrestamos.buscarPrestamo("09788420471839");
+        });
+    }
 
-        Assertions.assertNull(prestamo1);
-
+    @Test
+    void testBuscarPrestamoNoExistente() {
         when(catalogo.buscarLibroPorISBN("09788420471839")).thenReturn(libro1);
-        Prestamo prestamo2 = sistemaPrestamos.buscarPrestamo("09788420471839");
 
-        verify(catalogo, times(2)).buscarLibroPorISBN("09788420471839");
-        Assertions.assertNull(prestamo2);
+        PrestamoNoExistenteException e1 = Assertions.assertThrows(PrestamoNoExistenteException.class, () -> {
+            sistemaPrestamos.buscarPrestamo("09788420471839");
+        });
+        Assertions.assertEquals("No existe ningún préstamo para el libro de ISBN: 09788420471839", e1.getMessage());
     }
 }

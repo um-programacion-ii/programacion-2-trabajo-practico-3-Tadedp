@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.enums.EstadoLibro;
+import org.example.excepciones.LibroNoExistenteException;
 import org.example.modelos.Catalogo;
 import org.example.modelos.Libro;
 import org.junit.jupiter.api.BeforeEach;
@@ -76,12 +77,9 @@ public class CatalogoTest {
 
     @Test
     void testBuscarLibroInexistentePorISBN() {
-        Assertions.assertNull(this.catalogo.buscarLibroPorISBN(libro1.getISBN()));
-        Assertions.assertNull(this.catalogo.buscarLibroPorISBN(libro2.getISBN()));
-
-        this.catalogo.agregarLibro(libro1);
-        this.catalogo.agregarLibro(libro2);
-
-        Assertions.assertNull(this.catalogo.buscarLibroPorISBN("012345678901234"));
+        LibroNoExistenteException e = Assertions.assertThrows(LibroNoExistenteException.class, () -> {
+            catalogo.buscarLibroPorISBN("09788420471839");
+        });
+        Assertions.assertEquals("No existe ningún libro con ISBN: 09788420471839", e.getMessage());
     }
 }

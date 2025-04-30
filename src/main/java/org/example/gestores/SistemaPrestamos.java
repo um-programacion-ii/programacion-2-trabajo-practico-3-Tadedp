@@ -1,6 +1,9 @@
 package org.example.gestores;
 
 import org.example.enums.EstadoLibro;
+import org.example.excepciones.LibroNoDisponibleException;
+import org.example.excepciones.LibroNoExistenteException;
+import org.example.excepciones.PrestamoNoExistenteException;
 import org.example.modelos.Catalogo;
 import org.example.modelos.Libro;
 import org.example.modelos.Prestamo;
@@ -27,40 +30,31 @@ public class SistemaPrestamos {
         return prestamosActivos;
     }
 
-    public Prestamo buscarPrestamo(String isbn) {
+    public Prestamo buscarPrestamo(String isbn) throws LibroNoExistenteException {
         Libro libro = catalogo.buscarLibroPorISBN(isbn);
-        if (libro != null) {
-            for ( Prestamo prestamo : prestamosActivos ) {
-                if ( prestamo.getLibro() == libro ) {
-                    return prestamo;
-                }
+        for ( Prestamo prestamo : prestamosActivos ) {
+            if ( prestamo.getLibro() == libro ) {
+                return prestamo;
             }
         }
-        return null;
+        throw new PrestamoNoExistenteException("No existe ningún préstamo para el libro de ISBN: " + isbn);
     }
 
-    public Prestamo prestarLibro(String isbn) {
+    public Prestamo prestarLibro(String isbn) throws LibroNoExistenteException {
         Libro libro = catalogo.buscarLibroPorISBN(isbn);
-        if (libro  != null && libro.getEstado() == EstadoLibro.DISPONIBLE) {
+        if (libro.getEstado() == EstadoLibro.DISPONIBLE) {
             Prestamo prestamo = new Prestamo(libro);
             prestamosActivos.add(prestamo);
             libro.setEstado(EstadoLibro.PRESTADO);
             return prestamo;
         }
-        return null;
+        throw new LibroNoDisponibleException("No se encuentra disponible el libro de ISBN: " + isbn);
     }
 
-    public Prestamo devolverLibro(String isbn) {
-        Libro libro = catalogo.buscarLibroPorISBN(isbn);
-        if (libro  != null) {
-            for ( Prestamo prestamo : prestamosActivos ) {
-                if ( prestamo.getLibro() == libro ) {
-                    prestamosActivos.remove(prestamo);
-                    libro.setEstado(EstadoLibro.DISPONIBLE);
-                    return prestamo;
-                }
-            }
-        }
-        return null;
+    public Prestamo devolverLibro(String isbn) throws LibroNoExistenteException, PrestamoNoExistenteException {
+        Prestamo prestamo = buscarPrestamo(isbn);
+        prestamosActivos.remove(prestamo);
+        prestamo.getLibro().setEstado(EstadoLibro.DISPONIBLE);
+        return prestamo;
     }
 }
