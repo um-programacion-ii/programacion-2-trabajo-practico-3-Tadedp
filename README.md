@@ -30,14 +30,31 @@
    - `EstadoLibro estado = EstadoLibro.DISPONIBLE`
  - Constructor: `Libro(String ISBN, String titulo, String autor)`
  - Métodos setter: `getISBN()`, `getTitulo()`, `getAutor()` y `getEstado()`
- - Métodos getter: `setISBN(String ISBN)`, `setTitulo(String titulo)`, `setAutor(String autor)`, `setEstado()`
+ - Métodos getter: `setISBN(String ISBN)`, `setTitulo(String titulo)`, `setAutor(String autor)` y `setEstado()`
 ---
 ## Clase Catalogo
 - Atributos:
    - `ArrayList<Libro> libros`
-- Métodos que retorna los libros disponibles: `getLibros()`
-- Métodos para agregar y eliminar libros: `agregarLibro(Libro libro)`, `eliminarLibro(Libro libro)`
+- Método que retorna los libros disponibles: `getLibros()`
+- Métodos para agregar y eliminar libros: `agregarLibro(Libro libro)` y `eliminarLibro(Libro libro)`
 - Método para buscar libro por ISBN: `buscarLibroPorISBN(String ISBN)`
+---
+## Clase Prestamo
+- Atributos:
+   - `LocalDate fechaPrestamo`
+   - `Libro libro`
+- Constructor: `Prestamo(Libro libro)`
+- Métodos getter: `getLibro()` y `getFechaPrestamo()`
+- Método setter: `setLibro(Libro libro)`
+---
+## Clase SistemaPrestamos
+- Atributos:
+   - `Catalogo catalogo`
+   - `ArrayList<Prestamo> prestamosActivos`}
+- Constructor: `SistemaPrestamos(Catalogo catalogo)`
+- Métodos getter: `getCatalogo()` y `getPrestamosActivos()` 
+- Métodos prestar y devolver libros: `prestarLibro(String ISBN)` y `devolverLibro(String ISBN)`
+- Método para buscar un préstamo activo: `buscarPrestamo(String ISBN)`
 ---
 # Resultados de los tests
 
