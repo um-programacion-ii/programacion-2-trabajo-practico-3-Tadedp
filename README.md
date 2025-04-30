@@ -1,3 +1,4 @@
+[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/jpLeSJQi)
 # Sistema de Gestión de Biblioteca - Práctica de Testing
 
 ![Java](https://img.shields.io/badge/Java-21-orange)
@@ -10,9 +11,73 @@
 - **Recomendación:** Se sugiere leer la consigna completa antes de comenzar con el desarrollo para tener una visión general del proyecto y planificar adecuadamente el trabajo.
 
 ## Identificación del Alumno
-- **Nombre:** [Nombre del Alumno]
-- **Apellido:** [Apellido del Alumno]
-- **Legajo:** [Número de Legajo]
+- **Nombre:** Tadeo 
+- **Apellido:** Drube Perez
+- **Legajo:** 62222
+
+# Documentación
+
+## Enumeración EstadoLibro
+ - Constantes:
+   - `DISPONIBLE`
+   - `PRESTADO`
+---
+## Clase Libro
+ - Atributos:
+   - `String ISBN `
+   - `String titulo`
+   - `String autor`
+   - `EstadoLibro estado = EstadoLibro.DISPONIBLE`
+ - Constructor: `Libro(String ISBN, String titulo, String autor)`
+ - Métodos setter: `getISBN()`, `getTitulo()`, `getAutor()` y `getEstado()`
+ - Métodos getter: `setISBN(String ISBN)`, `setTitulo(String titulo)`, `setAutor(String autor)` y `setEstado()`
+---
+## Clase Catalogo
+- Atributos:
+   - `ArrayList<Libro> libros`
+- Método que retorna los libros disponibles: `getLibros()`
+- Métodos para agregar y eliminar libros: `agregarLibro(Libro libro)` y `eliminarLibro(Libro libro)`
+- Método para buscar libro por ISBN: `buscarLibroPorISBN(String ISBN)`
+---
+## Clase Prestamo
+- Atributos:
+   - `LocalDate fechaPrestamo`
+   - `Libro libro`
+- Constructor: `Prestamo(Libro libro)`
+- Métodos getter: `getLibro()` y `getFechaPrestamo()`
+- Método setter: `setLibro(Libro libro)`
+---
+## Clase SistemaPrestamos
+- Atributos:
+   - `Catalogo catalogo`
+   - `ArrayList<Prestamo> prestamosActivos`
+- Constructor: `SistemaPrestamos(Catalogo catalogo)`
+- Métodos getter: `getCatalogo()` y `getPrestamosActivos()` 
+- Métodos prestar y devolver libros: `prestarLibro(String ISBN)` y `devolverLibro(String ISBN)`
+- Método para buscar un préstamo activo: `buscarPrestamo(String ISBN)`
+---
+## Clase Usuario
+- Atributos:
+   - `String nombre`
+   - `ArrayList<Prestamo> historialPrestamos`
+- Constructor: `Usuario(String nombre)`
+- Métodos getter: `getNombre()` y `getHistorialPrestamos()`
+- Método setter: `setNombre(String nombre)`
+- Método para registrar préstamo: `registrarPrestamo(Prestamo prestamo)`
+---
+## Clase GestionUsuarios
+- Atributos:
+   - `ArrayList<Usuario> usuariosActivos`
+- Método getter: `getUsuariosActivos()`
+- Métodos agregar y eliminar usuarios: `agregarUsuario(String nombre)` y `eliminarUsuario(String nombre)`
+- Método para buscar un usuario activo: `buscarUsuario(String nombre)`
+- Método para registrar préstamo de usuario: `registrarPrestamo(String nombre, Prestamo prestamo)`
+---
+# Resultados de los tests
+
+Resultados de la ejecución de todos los test:
+
+![Resultados de los tests](resultados_test/resultados_test.png)
 
 ## Importante
 - La rama `main` está protegida y no se pueden hacer commits directos sobre ella
