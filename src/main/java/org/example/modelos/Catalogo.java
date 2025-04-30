@@ -1,6 +1,7 @@
 package org.example.modelos;
 
 import org.example.enums.EstadoLibro;
+import org.example.excepciones.LibroNoExistenteException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,6 @@ public class Catalogo {
                 return libro;
             }
         }
-        return null;
+        throw new LibroNoExistenteException("No existe ningún libro con ISBN: " + ISBN);
     }
 }
